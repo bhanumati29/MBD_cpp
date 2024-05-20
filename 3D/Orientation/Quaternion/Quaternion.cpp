@@ -110,7 +110,7 @@ Quat Quaternion::pow_scalar(Quat q, double r){
 	double u_norm = sqrt(q.q1 * q.q1 + q.q2 * q.q2 + q.q3 * q.q3);
 	if(u_norm==0.0){
 		double sin_r_th = sin(r * th);
-		Quat q2(pow(norm_q,r) * cos(r*th), 0.0, 0.0, 0.0);
+		Quat q2(pow(norm_q,r), 0.0, 0.0, 0.0);
 		return q2;
 	}
 	else{
