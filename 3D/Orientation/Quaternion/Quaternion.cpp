@@ -108,15 +108,22 @@ Quat Quaternion::pow_scalar(Quat q, double r){
 	double th = acos(q.q0 / sqrt(q.q0 * q.q0 + q.q1 * q.q1 + q.q2 * q.q2 + q.q3 * q.q3));
 
 	double u_norm = sqrt(q.q1 * q.q1 + q.q2 * q.q2 + q.q3 * q.q3);
-	double u_hat_x = q.q1 / u_norm;
-	double u_hat_y = q.q2 / u_norm;
-	double u_hat_z = q.q3 / u_norm;
+	if(u_norm==0.0){
+		double sin_r_th = sin(r * th);
+		Quat q2(pow(norm_q,r) * cos(r*th), 0.0, 0.0, 0.0);
+		return q2;
+	}
+	else{
+		double u_hat_x = q.q1 / u_norm;
+		double u_hat_y = q.q2 / u_norm;
+		double u_hat_z = q.q3 / u_norm;
 
-	double sin_r_th = sin(r * th);
-	Quat q2(cos(r*th), u_hat_x * sin_r_th, u_hat_y * sin_r_th, u_hat_z * sin_r_th);
-	q2 = mul_scalar(q2, pow(norm_q,r));
+		double sin_r_th = sin(r * th);
+		Quat q2(cos(r*th), u_hat_x * sin_r_th, u_hat_y * sin_r_th, u_hat_z * sin_r_th);
+		q2 = mul_scalar(q2, pow(norm_q,r));
 
-	return q2;
+		return q2;
+	}
 }
 
 Quat Quaternion::exp_quat(Quat q) {
