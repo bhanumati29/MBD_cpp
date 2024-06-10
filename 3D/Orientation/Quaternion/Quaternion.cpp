@@ -155,6 +155,35 @@ Quat Quaternion::log_e(Quat q) {
 	return q2;
 }
 
+Quat Quaternion::lerp(Quat q1, Quat q2, double tau){
+	Quat ql;
+	ql.q0 = (1.0 - tau)*q1.q0 + tau*q2.q0;
+	ql.q1 = (1.0 - tau)*q1.q1 + tau*q2.q1;
+	ql.q2 = (1.0 - tau)*q1.q2 + tau*q2.q2;
+	ql.q3 = (1.0 - tau)*q1.q3 + tau*q2.q3;
+
+	ql = normalize(ql);
+	return ql;
+}
+
+Quat Quaternion::slerp(Quat q1, Quat q2, double tau){
+	Quat qs;
+	double dot = q1.q0*q2.q0 + q1.q1*q2.q1 + q1.q2*q2.q2 + q1.q3*q2.q3;
+	if(dot<0.0){
+		q2 = mul_scalar(q2, -1.0);
+		dot = -1.0*dot;
+	}
+	if(dot>0.99995){
+		qs = lerp(q1, q2, tau);
+		return qs;
+	}
+
+	double th_0 = acos(dot);
+	double s_th_0 = sin(th_0);
+
+	
+}
+
 ////////////////////////////////////////////////////////////
 
 Diff::Diff() {
