@@ -181,7 +181,12 @@ Quat Quaternion::slerp(Quat q1, Quat q2, double tau){
 	double th_0 = acos(dot);
 	double s_th_0 = sin(th_0);
 
-	
+	double s1 = sin((1.0-tau)*th_0)/s_th_0;
+	double s2 = sin(tau*th_0)/s_th_0;
+
+	qs = normalize(add(mul_scalar(q1, s1), mul_scalar(q2, s2)));
+
+	return qs;
 }
 
 ////////////////////////////////////////////////////////////
